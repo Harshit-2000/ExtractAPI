@@ -23,7 +23,7 @@ def home():
 def upload():
     data = []
     if request.method == "POST":
-        files = request.files.getlist("files")
+        files = request.files.getlist("files[]")
         for file in files:
             if file.filename == '':
                 continue

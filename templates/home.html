@@ -27,7 +27,7 @@
             <p>
             <ul>
                 <li> Method allowed - POST </li>
-                <li> Paramaters - <b>files</b> -
+                <li> Paramaters - <b>files[]</b> -
                     File/Files in pdf format. </li>
                 <li> Returns - Name, Email, PhoneNo, Experience, Original Text extracted from the CV in json format.
                 </li>
@@ -37,7 +37,7 @@
                     import requests
 
                     url = 'http://127.0.0.1:5000/api/extract'
-                    files = {'files': open('data/sample.pdf', 'rb')}
+                    files = {'files[]': open('data/sample.pdf', 'rb')}
                     
                     r = requests.post(url, files=files)
                     r.json()
