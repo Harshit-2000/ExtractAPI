@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 from werkzeug.utils import secure_filename
+from werkzeug.wrappers import response
 from werkzeug.wrappers.response import Response
 from extract import Extract
+from flask_cors import CORS
 
 import os
 import json
@@ -11,6 +13,7 @@ UPLOAD_FOLDER = os.path.dirname(
     os.path.abspath(__file__)) + '/uploads/'
 
 app = Flask(__name__)
+CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -35,7 +38,9 @@ def upload():
             Extract(filepath, tempdata)
             os.unlink('uploads/' + filename)
             data.append(tempdata)
-        return jsonify(data)
+
+        response = jsonify(data)
+        return response
 
 
 @app.route('/api/addname', methods=["POST"])
@@ -45,7 +50,12 @@ def addName():
         name = data['name']
         with open('data/names/newNames.txt', mode='a') as file:
             file.write(name + ' ')
-        return Response(json.dumps({'message': 'success'}), status=201, mimetype='application/json')
+        response = Response(json.dumps(
+            {'message': 'success'}), status=201, mimetype='application/json')
+        return response
+
     except Exception as e:
         print(e)
-        return Response(json.dumps({'message': 'error'}), status=500, mimetype='application/json')
+        response = Response(json.dumps(
+            {'message': 'error'}), status=500, mimetype='application/json')
+        return response
