@@ -31,8 +31,8 @@ def upload():
             if file.filename == '':
                 continue
             tempdata = {}
+            tempdata["filename"] = file.filename
             filename = secure_filename(file.filename)
-            tempdata["filename"] = filename
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
             Extract(filepath, tempdata)
