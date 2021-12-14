@@ -2,6 +2,7 @@ from pdfminer.high_level import extract_text
 import nltk
 import re
 import time
+import textract
 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
@@ -18,8 +19,19 @@ class Extract():
 
     def __init__(self, filepath, info):
         try:
-            with open(filepath, 'rb') as f:
-                self.text = extract_text(f)
+            ext = filepath.split('.')[-1]
+
+            if ext == 'pdf':
+                self.text = extract_text(filepath)
+            elif ext == 'txt':
+                self.text = open(filepath).read()
+            elif ext == 'docx':
+                self.text = textract.process(filepath).decode('utf-8')
+            elif ext == 'doc':
+                self.text = textract.process(filepath)
+            else:
+                print("Unsupported Format")
+
         except Exception as e:
             print(e)
             self.text = ''
