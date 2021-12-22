@@ -42,7 +42,8 @@ class Extract():
         self.getEmail(self.text, infoDict=info)
         self.getPhoneNo(self.text, infoDict=info)
         self.getExperience(self.text, infoDict=info)
-        self.getText(self.text, infoDict=info)
+        orignalText = self.getText(self.text, infoDict=info)
+        self.keywordMatch(orignalText, infoDict=info)
 
     def preprocess(self, document):
         """
@@ -216,6 +217,27 @@ class Extract():
         infoDict['original_text'] = original_text
 
         return original_text
+
+    def keywordMatch(self, inputString, infoDict):
+        keywords = ''
+        match = []
+        try:
+            keywords = open('data/keywords.txt', mode='r').read()
+            keywords = set(keywords.split(','))
+            keywords = [word.lower().strip()
+                        for word in keywords if word]
+            inputString = inputString.lower()
+
+            for word in keywords:
+                if word in inputString:
+                    match.append(word)
+
+        except Exception as e:
+            print(e)
+
+        infoDict['keywords'] = match
+
+        return match
 
 
 if __name__ == "__main__":

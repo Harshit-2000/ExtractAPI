@@ -21,7 +21,7 @@
     </nav>
 
     <div class="container">
-        There are two endpoints.
+        There are following endpoints.
         <ol>
             <li><a href="">cv-extract-api-2000.herokuapp.com/api/extract</a></li>
             <p>
@@ -66,6 +66,17 @@
                     r.json()
                 </code>
             </pre>
+            </ul>
+            </p>
+
+
+            <li><a href="">cv-extract-api-2000.herokuapp.com/api/keyword</a></li>
+            <p>
+            <ul>
+                <li> Method allowed - POST / GET </li>
+                <li> <b> POST </b> - takes a <b>.txt</b> file with key <b>"file[]"</b> -
+                    text file with keywords seperated by comma. </li>
+                <li> <b> GET </b> - return current set of keywords. </li>
             </ul>
             </p>
         </ol>
